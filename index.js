@@ -13,7 +13,7 @@ function addMovie(event){
 
     movieTitle.textContent = inputField.value;
 
-    addEventListener('click', crossOffMovie);
+    movieTitle.addEventListener('click', crossOffMovie);
 
     movie.appendChild(movieTitle);
 
@@ -25,9 +25,7 @@ function addMovie(event){
 
     movie.appendChild(deleteBtn);
 
-    const list = document.querySelector('ul');
-
-    list.appendChild(movie);
+    document.querySelector('ul').appendChild(movie);
 
     inputField.value = '';
 }
@@ -36,18 +34,25 @@ function deleteMovie(event) {
     event.target.parentNode.remove();
 
     message.textContent = 'Movie Deleted!'
+
+    revealMessage();
 }
 
 function crossOffMovie(event){
     event.target.classList.toggle('checked')
     
     if (event.target.classList.contains('checked')) {
-    message.textContent = "You've watched a movie!"
+    message.textContent = event.target.textContent + " was watched!"
         
     } else {
-    message.textContent = "You uncrossed off a movie!"
+    message.textContent = event.target.textContent + " was uncrossed! Ready to watch again?"
     }
+
+    revealMessage();
 }
 
+function revealMessage() {
+    setTimeout((callback, 1000) , {callback(){message.classList.toggle('hide')}});
+}
 
 document.querySelector('form').addEventListener('submit', addMovie);
